@@ -20,48 +20,48 @@ class PasswordPolicy
      *
      * @param  array $params optional array of policy configuration parameters
      */
-    function __construct ($params=NULL)
+    function __construct ($params=array())
     {
         // Define defaults
         $this->rules['min_length'] = array(
             'value' => false,
-            'string' => 'Password must be more than #VALUE# characters long');
+            'error' => 'Password must be more than #VALUE# characters long');
         $this->rules['max_length'] = array(
             'value' => false,
-            'string' => 'Password must be less than #VALUE# characters long');
+            'error' => 'Password must be less than #VALUE# characters long');
         $this->rules['min_unique_chars'] = array(
             'value' => false,
-            'string' => 'Password must contain at least #VALUE# unique characters');
+            'error' => 'Password must contain at least #VALUE# unique characters');
         $this->rules['allow_numeric_chars'] = array(
             'value' => false,
-            'string' => 'Password may not contain numbers');
+            'error' => 'Password may not contain numbers');
         $this->rules['allow_numeric_first'] = array(
             'value' => false,
-            'string' => 'First character cannot be numeric');
+            'error' => 'First character cannot be numeric');
         $this->rules['allow_numeric_last'] = array(
             'value' => false,
-            'string' => 'Last character cannot be numeric');
+            'error' => 'Last character cannot be numeric');
         $this->rules['min_numeric_chars'] = array(
             'value' => false,
-            'string' => 'Password must contain at least #VALUE# numbers');
+            'error' => 'Password must contain at least #VALUE# numbers');
         $this->rules['max_numeric_chars'] = array(
             'value' => false,
-            'string' => 'Password must contain no more than #VALUE# numbers');
+            'error' => 'Password must contain no more than #VALUE# numbers');
         $this->rules['allow_nonalphanumeric_chars'] = array(
             'value' => false,
-            'string' => 'Password may not contain non-alphanumeric characters');
+            'error' => 'Password may not contain non-alphanumeric characters');
         $this->rules['allow_nonalphanumeric_first'] = array(
             'value' => false,
-            'string' => 'First character cannot be non-alphanumeric');
+            'error' => 'First character cannot be non-alphanumeric');
         $this->rules['allow_nonalphanumeric_last'] = array(
             'value' => false,
-            'string' => 'Last character cannot be non-alphanumeric');
+            'error' => 'Last character cannot be non-alphanumeric');
         $this->rules['min_nonalphanumeric_chars'] = array(
             'value' => false,
-            'string' => 'Password must contain at least #VALUE# non-aplhanumeric characters');
+            'error' => 'Password must contain at least #VALUE# non-aplhanumeric characters');
         $this->rules['max_nonalphanumeric_chars'] = array(
             'value' => false,
-            'string' => 'Password must contain no more than #VALUE# non-alphanumeric characters');
+            'error' => 'Password must contain no more than #VALUE# non-alphanumeric characters');
         
         // Apply params from constructor array
         foreach( $params as $k=>$v ) { $this->$k = $v; }
@@ -148,16 +148,16 @@ class PasswordPolicy
     }
     
     /*
-     * Get the string description for a rule
+     * Get the error description for a rule
      *
      * @param  string   $rule       Identifier for the rule to be applied
-     * @return string               Descriptive string for rule if it exists
-     *                              0 otherwise
+     * @return string               Error string for rule if it exists
+     *                              false otherwise
      */
-    private function get_rule_string($rule)
+    private function get_rule_error($rule)
     {
-        return ( isset($this->rules[$rule]) ) 
-        ? str_replace( '#VALUE#', $this->rules[$rule]['value'], $this->rules[$rule]['string'] )
-        : 0;
+        return ( isset($this->rules[$rule]) && $this->rules[$rule]['value'] ) 
+        ? str_replace( '#VALUE#', $this->rules[$rule]['value'], $this->rules[$rule]['error'] )
+        : false;
     }
 }
