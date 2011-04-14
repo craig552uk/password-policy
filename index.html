@@ -16,11 +16,9 @@
     <h2 id="download">Download</h2>
     <p><a href="https://github.com/craig552uk/password-policy/zipball/master">Download ZIP</a></p>
     <p><a href="https://github.com/craig552uk/password-policy/tarball/master">Download TAR</a></p>
-    <p>Password Policy is released on the <a href="http://www.opensource.org/licenses/mit-license.php">MIT Licence</a></p>
+    <p><em>Released on the <a href="http://www.opensource.org/licenses/mit-license.php">MIT Licence</a></em></p>
     
-    <h2 id="usage">Usage</h2>
-    
-    <h3 id="getting_started">Getting Started</h3>
+    <h2 id="getting_started">Getting Started</h2>
     <p>Using Password Policy on your site is simple.</p>
     <ol>
         <li>
@@ -42,7 +40,7 @@ $policy-&gt;max_length = 64;</code></pre>
         </li>
     </ol><p>An example implementation of Password Policy is included in policy-demo.php</p>
     
-    <h2 id="advanced">Advanced</h2>
+    <h2 id="advanced_use">Advanced Use</h2>
     
     <h3 id="seperate_policy_rules">Seperate Policy Rules</h3>
     <p>You can define your policy rules seperately as an array and pass this to the constructor, rather than defining rules on the object. Array key should be the rule identifier, value should be the correct type. This is useful if you want to define your policy rules is a seperate configuration file.</p>
@@ -182,27 +180,28 @@ $rules['max_nonalphanumeric_chars'] = 16;</code></pre>
     
     <div id="navigation">
         <h1>Password Policy</h1>
-        <div id="links"></div>
+        <div id="links">
+            <a href="#download">Download</a>
+            <a href="#getting_started">Getting Started</a>
+            <a href="#advanced_use">Advanced Use</a>
+            <a href="#policy_rules">Policy Rules</a>
+        </div>
         <p><a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="craig552uk">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script></p>
         <p><script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script><fb:like href="" layout="button_count" show_faces="false" width="450" font=""></fb:like></p>
     </div>
     
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script> 
-    <script>
-    /* This i nicked from http://gilbitron.github.com/PIP/ */
-    $(document).ready(function() {        
-        $('.wrapper h2').each(function(index) {
-            var title = $(this);
-            var thisId = this.id;
-            var text = title.text();
-            if(title.is('h3')) text = '- ' + text;
-            
-            $('<a></a>').attr({
-                'title': 'jump to ' + title.text(),
-                'href': '#' + thisId
-            }).text(text).appendTo('#navigation #links');
-        });
-    });
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-1315320-4']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
     </script>
 </body>
 </html>
