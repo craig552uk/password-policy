@@ -23,44 +23,61 @@ class PasswordPolicy
     function __construct ($params=array())
     {
         // Define defaults
+        //  Key is rule identifier
+        //  Value is rule parameter, false is disabled
+        //  Type is type of parameter data (integer or boolean)
+        //  Error is rule string definition, user #VALUE# to insert value
         $this->rules['min_length'] = array(
             'value' => false,
+            'type'  => 'integer',
             'error' => 'Password must be more than #VALUE# characters long');
         $this->rules['max_length'] = array(
             'value' => false,
+            'type'  => 'integer',
             'error' => 'Password must be less than #VALUE# characters long');
         $this->rules['min_unique_chars'] = array(
             'value' => false,
+            'type'  => 'integer',
             'error' => 'Password must contain at least #VALUE# unique characters');
-        $this->rules['allow_numeric_chars'] = array(
+        $this->rules['disallow_numeric_chars'] = array(
             'value' => false,
+            'type'  => 'boolean',
             'error' => 'Password may not contain numbers');
         $this->rules['allow_numeric_first'] = array(
             'value' => false,
+            'type'  => 'boolean',
             'error' => 'First character cannot be numeric');
         $this->rules['allow_numeric_last'] = array(
             'value' => false,
+            'type'  => 'boolean',
             'error' => 'Last character cannot be numeric');
         $this->rules['min_numeric_chars'] = array(
             'value' => false,
+            'type'  => 'integer',
             'error' => 'Password must contain at least #VALUE# numbers');
         $this->rules['max_numeric_chars'] = array(
             'value' => false,
+            'type'  => 'integer',
             'error' => 'Password must contain no more than #VALUE# numbers');
-        $this->rules['allow_nonalphanumeric_chars'] = array(
+        $this->rules['disallow_nonalphanumeric_chars'] = array(
             'value' => false,
+            'type'  => 'boolean',
             'error' => 'Password may not contain non-alphanumeric characters');
         $this->rules['allow_nonalphanumeric_first'] = array(
             'value' => false,
+            'type'  => 'boolean',
             'error' => 'First character cannot be non-alphanumeric');
         $this->rules['allow_nonalphanumeric_last'] = array(
             'value' => false,
+            'type'  => 'boolean',
             'error' => 'Last character cannot be non-alphanumeric');
         $this->rules['min_nonalphanumeric_chars'] = array(
             'value' => false,
+            'type'  => 'integer',
             'error' => 'Password must contain at least #VALUE# non-aplhanumeric characters');
         $this->rules['max_nonalphanumeric_chars'] = array(
             'value' => false,
+            'type'  => 'integer',
             'error' => 'Password must contain no more than #VALUE# non-alphanumeric characters');
         
         // Apply params from constructor array
