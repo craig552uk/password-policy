@@ -7,22 +7,22 @@
     $password = ( isset($_POST['password']) ) ? $_POST['password'] : false;
     
     // Array defining rules
-    $rules['min_numeric_chars'] = 3;
-    $rules['disallow_numeric_chars'] = true;
+    $rules['min_length'] = 8;
+    $rules['max_length'] = 64;
     
     // Create password policy object
     // Pass rule array in constructor
     $policy = new PasswordPolicy($rules);
     
-    // Rules defined against object
-    $policy->min_length = 8;
-    $policy->max_length = 12;
+    // Rules defined on object
+    $policy->min_lowercase_chars = 1;
+    $policy->min_uppercase_chars = 1;
+    $policy->min_numeric_chars = 1;
     
     // Validate submitted password
     $valid = $policy->validate($password);
     
-?>
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <html lang="en">
 <head>
     <title></title>
