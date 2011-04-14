@@ -22,66 +22,103 @@ class PasswordPolicy
      */
     function __construct ($params=array())
     {
-        // Define defaults
+        // Define Rules
         //  Key is rule identifier
-        //  Value is rule parameter, false is disabled
+        //  Value is rule parameter, false is disabled (default)
         //  Type is type of parameter data (integer or boolean)
-        //  Error is rule string definition, user #VALUE# to insert value
+        //  Test is php code condition, password string is $p, rule value is $v
+        //  Error is rule string definition, use #VALUE# to insert value
         $this->rules['min_length'] = array(
             'value' => false,
             'type'  => 'integer',
+            'test'  => 'return strlen($p)>=$v;',
             'error' => 'Password must be more than #VALUE# characters long');
         $this->rules['max_length'] = array(
             'value' => false,
             'type'  => 'integer',
+            'test'  => 'return (strlen($p)<=$v);',
             'error' => 'Password must be less than #VALUE# characters long');
         $this->rules['min_unique_chars'] = array(
             'value' => false,
             'type'  => 'integer',
+            'test'  => 'return true;',
             'error' => 'Password must contain at least #VALUE# unique characters');
+        $this->rules['min_lowercase_chars'] = array(
+            'value' => false,
+            'type'  => 'integer',
+            'test'  => 'return true;',
+            'error' => 'Password must contain at least #VALUE# lowercase characters');
+        $this->rules['max_lowercase_chars'] = array(
+            'value' => false,
+            'type'  => 'integer',
+            'test'  => 'return true;',
+            'error' => 'Password must contain no more than #VALUE# lowercase characters');
+        $this->rules['min_uppercase_chars'] = array(
+            'value' => false,
+            'type'  => 'integer',
+            'test'  => 'return true;',
+            'error' => 'Password must contain at least #VALUE# uppercase characters');
+        $this->rules['max_uppercase_chars'] = array(
+            'value' => false,
+            'type'  => 'integer',
+            'test'  => 'return true;',
+            'error' => 'Password must contain no more than #VALUE# uppercase characters');
         $this->rules['disallow_numeric_chars'] = array(
             'value' => false,
             'type'  => 'boolean',
+            'test'  => 'return true;',
             'error' => 'Password may not contain numbers');
         $this->rules['allow_numeric_first'] = array(
             'value' => false,
             'type'  => 'boolean',
+            'test'  => 'return true;',
             'error' => 'First character cannot be numeric');
         $this->rules['allow_numeric_last'] = array(
             'value' => false,
             'type'  => 'boolean',
+            'test'  => 'return true;',
             'error' => 'Last character cannot be numeric');
         $this->rules['min_numeric_chars'] = array(
             'value' => false,
             'type'  => 'integer',
+            'test'  => 'return true;',
             'error' => 'Password must contain at least #VALUE# numbers');
         $this->rules['max_numeric_chars'] = array(
             'value' => false,
             'type'  => 'integer',
+            'test'  => 'return true;',
             'error' => 'Password must contain no more than #VALUE# numbers');
         $this->rules['disallow_nonalphanumeric_chars'] = array(
             'value' => false,
             'type'  => 'boolean',
+            'test'  => 'return true;',
             'error' => 'Password may not contain non-alphanumeric characters');
         $this->rules['allow_nonalphanumeric_first'] = array(
             'value' => false,
             'type'  => 'boolean',
+            'test'  => 'return true;',
             'error' => 'First character cannot be non-alphanumeric');
         $this->rules['allow_nonalphanumeric_last'] = array(
             'value' => false,
             'type'  => 'boolean',
+            'test'  => 'return true;',
             'error' => 'Last character cannot be non-alphanumeric');
         $this->rules['min_nonalphanumeric_chars'] = array(
             'value' => false,
             'type'  => 'integer',
+            'test'  => 'return true;',
             'error' => 'Password must contain at least #VALUE# non-aplhanumeric characters');
         $this->rules['max_nonalphanumeric_chars'] = array(
             'value' => false,
             'type'  => 'integer',
+            'test'  => 'return true;',
             'error' => 'Password must contain no more than #VALUE# non-alphanumeric characters');
         
         // Apply params from constructor array
         foreach( $params as $k=>$v ) { $this->$k = $v; }
+        
+        // Errors defaults empty
+        $this->errors = array();
         
         return 1;
     }
@@ -144,7 +181,19 @@ class PasswordPolicy
      */
     public function validate($password)
     {
-        return 1;
+    
+        foreach( $this->rules as $k=>$rule )
+        {
+            // Aliases for password and rule value
+            $p = $password;
+            $v = $rule['value'];
+            
+            // Apply each configured rule in turn
+            if( $rule['value'] && !eval($rule['test']) )
+            $this->errors[$k] = $this->get_rule_error($k);
+        }
+    
+        return sizeof($this->errors) == 0;
     }
     
     /*
@@ -158,7 +207,7 @@ class PasswordPolicy
      */
     public function get_errors()
     {
-        return array();
+        return $this->errors;
     }
     
 /***** PRIVATE FUNCTIONS ******************************************************/
