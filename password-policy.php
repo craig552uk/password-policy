@@ -105,7 +105,17 @@ class PasswordPolicy
      */
     public function policy()
     {
-        return array();
+        $return = array();
+        
+        // Itterate over policy rules
+        foreach( $this->rules as $k => $v )
+        {
+            // If rule is enabled, add string to array
+            $string = $this->get_rule_error($k);
+            if( $string ) $return[$k] = $string;
+        }
+        
+        return $return;
     }
     
     /*
