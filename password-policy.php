@@ -235,19 +235,6 @@ class PasswordPolicy
     }
     
 /***** PRIVATE FUNCTIONS ******************************************************/
-
-    /*
-     * Validate a password against a specific rule
-     *
-     * @param  string   $rule       Identifier for the rule to be applied
-     * @param  string   $password   The password string to validate
-     * @return boolean              1 if pasword conforms to rule
-     *                              0 otherwise
-     */
-    private function validate_rule($rule, $password)
-    {
-        return 1;
-    }
     
     /*
      * Get the error description for a rule
