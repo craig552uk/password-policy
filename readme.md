@@ -5,7 +5,13 @@ A password policy class for PHP
 **Author** Craig Russell [craig@craig-russell.co.uk](mailto:craig@craig-russell.co.uk)      
 **Version** 0.1     
 
-Password Policy is a library that makes it easy to implement a password format policy on your application. It includes fucntiosn to return password validation errors and a decription of the defined policies to be displayed to your users.
+Password Policy is a library that makes it easy to implement a password format policy on your application. It includes functions to return password validation errors and a decription of the defined policies to be displayed to your users.
+
+## Download ##
+
+[Download ZIP](https://github.com/craig552uk/password-policy/zipball/master)
+
+[Download TAR](https://github.com/craig552uk/password-policy/tarball/master)
 
 ## Usage ##
 
@@ -29,6 +35,8 @@ Using Password Policy on your site is simple.
 4.  Validate a password
 
         if( $policy->validate($password) ) echo "Password OK!";
+
+An example implementation of Password Policy is included in policy-demo.php
 
 ## Advanced ##
 
