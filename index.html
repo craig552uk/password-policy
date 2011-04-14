@@ -1,21 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Password Policy</title>
+    <title>PHP Password Policy</title>
     <meta charset="utf-8"/>
+    <meta name="description" content="Password Policy is a PHP library that makes it easy to implement a password format policy on your application"/>
+    <meta name="author" content="Craig Russell"/>
     <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
     <div class="wrapper">
 
-    <h1>Password Policy</h1>
-    <p>A password policy class for PHP    </p>
-    <p><strong>Author</strong> Craig Russell <a href="mailto:craig@craig-russell.co.uk" title="Compose a new mail to craig@craig-russell.co.uk" onclick="window.open('https://mail.google.com/a///?view=cm&amp;fs=1&amp;tf=1&amp;to=craig@craig-russell.co.uk','Compose new message','width=640,height=480');return false" rel="noreferrer">craig@craig-russell.co.uk</a><br><strong>Version</strong> 0.1     </p>
-    <p>Password Policy is a library that makes it easy to implement a password format policy on your application. It includes functions to return password validation errors and a decription of the defined policies to be displayed to your users.</p>
+    <h1>PHP Password Policy</h1>
+    <p><em>PHP Password Policy makes it easy to implement a password format policy on your application. It includes functions to return password validation errors and a decription of the defined policies to be displayed to your users.</em></p>
 
     <h2 id="download">Download</h2>
     <p><a href="https://github.com/craig552uk/password-policy/zipball/master">Download ZIP</a></p>
     <p><a href="https://github.com/craig552uk/password-policy/tarball/master">Download TAR</a></p>
+    <p>Password Policy is released on the <a href="http://www.opensource.org/licenses/mit-license.php">MIT Licence</a></p>
     
     <h2 id="usage">Usage</h2>
     
@@ -168,6 +169,40 @@ $rules['min_nonalphanumeric_chars'] = 1;</code></pre>
     <p><strong>Identifier</strong> <code>max_nonalphanumeric_chars</code><br><strong>Value Type</strong> integer      </p>
     <pre><code>$policy-&gt;max_nonalphanumeric_chars = 16;
 $rules['max_nonalphanumeric_chars'] = 16;</code></pre>
+
+    <div id="footer">
+            <p>&copy; Craig Russell 2011<br/>
+            <a href="mailto:craig@craig-russell.co.uk" rel="noreferrer">craig@craig-russell.co.uk</a><br/>
+            <a href="http://www.craig-russell.co.uk">www.craig-russell.co.uk</a></p>
     </div>
+
+    </div>
+    
+
+    
+    <div id="navigation">
+        <h1>Password Policy</h1>
+        <div id="links"></div>
+        <p><a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="craig552uk">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script></p>
+        <p><script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script><fb:like href="" layout="button_count" show_faces="false" width="450" font=""></fb:like></p>
+    </div>
+    
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script> 
+    <script>
+    /* This i nicked from http://gilbitron.github.com/PIP/ */
+    $(document).ready(function() {        
+        $('.wrapper h2').each(function(index) {
+            var title = $(this);
+            var thisId = this.id;
+            var text = title.text();
+            if(title.is('h3')) text = '- ' + text;
+            
+            $('<a></a>').attr({
+                'title': 'jump to ' + title.text(),
+                'href': '#' + thisId
+            }).text(text).appendTo('#navigation #links');
+        });
+    });
+    </script>
 </body>
 </html>
