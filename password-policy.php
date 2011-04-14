@@ -25,43 +25,43 @@ class PasswordPolicy
         // Define defaults
         $this->rules['min_length'] = array(
             'value' => false,
-            'error' => 'Password must be more than #VALUE# characters long');
+            'string' => 'Password must be more than #VALUE# characters long');
         $this->rules['max_length'] = array(
             'value' => false,
-            'error' => 'Password must be less than #VALUE# characters long');
+            'string' => 'Password must be less than #VALUE# characters long');
         $this->rules['min_unique_chars'] = array(
             'value' => false,
-            'error' => 'Password must contain at least #VALUE# unique characters');
+            'string' => 'Password must contain at least #VALUE# unique characters');
         $this->rules['allow_numeric_chars'] = array(
             'value' => false,
-            'error' => 'Password may not contain numbers');
+            'string' => 'Password may not contain numbers');
         $this->rules['allow_numeric_first'] = array(
             'value' => false,
-            'error' => 'First character cannot be numeric');
+            'string' => 'First character cannot be numeric');
         $this->rules['allow_numeric_last'] = array(
             'value' => false,
-            'error' => 'Last character cannot be numeric');
+            'string' => 'Last character cannot be numeric');
         $this->rules['min_numeric_chars'] = array(
             'value' => false,
-            'error' => 'Password must contain at least #VALUE# numbers');
+            'string' => 'Password must contain at least #VALUE# numbers');
         $this->rules['max_numeric_chars'] = array(
             'value' => false,
-            'error' => 'Password must contain no more than #VALUE# numbers');
+            'string' => 'Password must contain no more than #VALUE# numbers');
         $this->rules['allow_nonalphanumeric_chars'] = array(
             'value' => false,
-            'error' => 'Password may not contain non-alphanumeric characters');
+            'string' => 'Password may not contain non-alphanumeric characters');
         $this->rules['allow_nonalphanumeric_first'] = array(
             'value' => false,
-            'error' => 'First character cannot be non-alphanumeric');
+            'string' => 'First character cannot be non-alphanumeric');
         $this->rules['allow_nonalphanumeric_last'] = array(
             'value' => false,
-            'error' => 'Last character cannot be non-alphanumeric');
+            'string' => 'Last character cannot be non-alphanumeric');
         $this->rules['min_nonalphanumeric_chars'] = array(
             'value' => false,
-            'error' => 'Password must contain at least #VALUE# non-aplhanumeric characters');
+            'string' => 'Password must contain at least #VALUE# non-aplhanumeric characters');
         $this->rules['max_nonalphanumeric_chars'] = array(
             'value' => false,
-            'error' => 'Password must contain no more than #VALUE# non-alphanumeric characters');
+            'string' => 'Password must contain no more than #VALUE# non-alphanumeric characters');
         
         // Apply params from constructor array
         foreach( $params as $k=>$v ) { $this->$k = $v; }
@@ -145,5 +145,19 @@ class PasswordPolicy
     private function validate_rule($rule, $password)
     {
         return 1;
+    }
+    
+    /*
+     * Get the string description for a rule
+     *
+     * @param  string   $rule       Identifier for the rule to be applied
+     * @return string               Descriptive string for rule if it exists
+     *                              0 otherwise
+     */
+    private function get_rule_string($rule)
+    {
+        return ( isset($this->rules[$rule]) ) 
+        ? str_replace( '#VALUE#', $this->rules[$rule]['value'], $this->rules[$rule]['string'] )
+        : 0;
     }
 }
