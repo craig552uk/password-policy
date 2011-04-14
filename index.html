@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+    <div class="wrapper">
+
+    <h1>Password Policy</h1>
+    <p>A password policy class for PHP    </p>
+    <p><strong>Author</strong> Craig Russell <a href="mailto:craig@craig-russell.co.uk" title="[GMCP] Compose a new mail to craig@craig-russell.co.uk" onclick="window.open('https://mail.google.com/a///?view=cm&amp;fs=1&amp;tf=1&amp;to=craig@craig-russell.co.uk','Compose new message','width=640,height=480');return false" rel="noreferrer">craig@craig-russell.co.uk</a><br><strong>Version</strong> 0.1     </p>
+    <p>Password Policy is a library that makes it easy to implement a password format policy on your application. It includes functions to return password validation errors and a decription of the defined policies to be displayed to your users.</p>
+
+    <h2>Download</h2>
+    <p><a href="https://github.com/craig552uk/password-policy/zipball/master">Download ZIP</a></p>
+    <p><a href="https://github.com/craig552uk/password-policy/tarball/master">Download TAR</a></p>
+    
+    <h2>Usage</h2>
+    
+    <h3>Getting Started</h3>
+    <p>Using Password Policy on your site is simple.</p>
+    <ol>
+        <li>
+            <p>Include the library</p>
+            <pre><code>require_once('password-policy.php');
+            </code></pre>
+        </li>
+        <li>
+            <p>Create the Password Policy object</p>
+            <pre><code>$policy = new PasswordPolicy();
+            </code></pre>
+        </li>
+        <li>
+            <p>Define the policy rules</p>
+            <pre><code>
+$policy-&gt;min_length = 8;
+$policy-&gt;max_length = 64;
+            </code></pre>
+        </li>
+        <li>
+        <p>Validate a password</p>
+        <pre><code>if( $policy-&gt;validate($password) ) echo "Password OK!";
+        </code></pre>
+        </li>
+    </ol><p>An example implementation of Password Policy is included in policy-demo.php</p>
+    
+    <h2>Advanced</h2>
+    
+    <h3>Seperate Policy Rules</h3>
+    <p>You can define your policy rules seperately as an array and pass this to the constructor, rather than defining rules on the object. Array key should be the rule identifier, value should be the correct type. This is useful if you want to define your policy rules is a seperate configuration file.</p>
+    <pre><code>$rules['min_length'] = 8;
+$rules['max_length'] = 64;
+$policy = new PasswordPolicy($rules);
+    </code></pre>
+    
+    <h3>Password Policy Definition</h3>
+    <p>The defined password policy in the object can be extracted as an array of strings.</p>
+    <pre><code>Array
+(
+    [min_length] =&gt; Password must be more than 8 characters long
+    [max_length] =&gt; Password must be less than 64 characters long
+)
+    </code></pre>
+    <p>This can then be displayed to the user.</p>
+    <pre><code>foreach( $policy-&gt;policy() as $id=&gt;$rule )
+echo "&lt;p id=\"$id\"&gt;$rule&lt;/p&gt;";
+    </code></pre>
+    
+    <h3>Password Validation Errors</h3>
+    <p>After validating the password, any errors can be retrieved as an array of strings in the same format as the policy array.</p>
+    <pre><code>foreach( $policy-&gt;get_errors() as $id=&gt;$rule )
+echo "&lt;p id=\"$id\"&gt;$rule&lt;/p&gt;";
+    </code></pre>
+    
+    <h2>Policy Rules</h2>
+    
+    <p>A Password Policy has several rules which can be configured, these are detailed below.</p>
+    <p>Policy rules have different types, a rule will ignore any attempt to set its value to an incorrect type. Please refer to the documentation below.</p>
+    <p><strong>IMPORTANT</strong> It is possible to define confilcting rules in a policy, which would make it impossible to set a password.</p>
+    <pre><code>$rules['min_length'] = 10;
+$rules['max_length'] = 5;
+    </code></pre>
+    
+    <h3>Minimum Length</h3>
+    <p>The minimum length of a password</p>
+    <p><strong>Identifier</strong> <code>min_length</code><br><strong>Value Type</strong> integer      </p>
+    <pre><code>$policy-&gt;min_length = 10;
+$rules['min_length'] = 10;
+    </code></pre>
+    
+    <h3>Maximum Length</h3>
+    <p>The maximum length of a password</p>
+    <p><strong>Identifier</strong> <code>max_length</code><br><strong>Value Type</strong> integer      </p>
+    <pre><code>$policy-&gt;max_length = 64;
+$rules['max_length'] = 64;
+    </code></pre>
+    
+    <h3>Minimum Lowercase Characters</h3>
+    <p>The minimum number of lowercase characters allowed in a password</p>
+    <p><strong>Identifier</strong> <code>min_lowercase_chars</code><br><strong>Value Type</strong> integer      </p>
+    <pre><code>$policy-&gt;min_lowercase_chars = 1;
+$rules['min_lowercase_chars'] = 1;
+    </code></pre>
+    
+    <h3>Maximum Lowercase Characters</h3>
+    <p>The maximum number of lowercase characters allowed in a password</p>
+    <p><strong>Identifier</strong> <code>max_lowercase_chars</code><br><strong>Value Type</strong> integer      </p>
+    <pre><code>$policy-&gt;max_lowercase_chars = 16;
+$rules['max_lowercase_chars'] = 16;
+    </code></pre>
+    
+    <h3>Minimum Uppercase Characters</h3>
+    <p>The minimum number of uppercase characters allowed in a password</p>
+    <p><strong>Identifier</strong> <code>min_uppercase_chars</code><br><strong>Value Type</strong> integer      </p>
+    <pre><code>$policy-&gt;min_uppercase_chars = 1;
+$rules['min_uppercase_chars'] = 1;
+    </code></pre>
+
+    <h3>Maximum Uppercase Characters</h3>
+    <p>The maximum number of uppercase characters allowed in a password</p>
+    <p><strong>Identifier</strong> <code>max_uppercase_chars</code><br><strong>Value Type</strong> integer      </p>
+    <pre><code>$policy-&gt;max_uppercase_chars = 16;
+$rules['max_uppercase_chars'] = 16;
+    </code></pre>
+
+    <h3>Disallow Numeric Characters</h3>
+    <p>Do not allow numeric characters in a password. This is functionally equivalent to <code>max_numeric_chars = 0</code></p>
+    <p><strong>Identifier</strong> <code>disallow_numeric_chars</code><br><strong>Value Type</strong> boolean      </p>
+    <pre><code>$policy-&gt;disallow_numeric_chars = true;
+$rules['disallow_numeric_chars'] = true;
+    </code></pre>
+
+    <h3>Disallow Numeric Character First</h3>
+    <p>Do not allow the first character in a password to be numeric</p>
+    <p><strong>Identifier</strong> <code>disallow_numeric_first</code><br><strong>Value Type</strong> boolean      </p>
+    <pre><code>$policy-&gt;disallow_numeric_first = true;
+$rules['disallow_numeric_first'] = true;
+    </code></pre>
+
+    <h3>Disallow Numeric Character Last</h3>
+    <p>do not allow the last character in a password to be numeric</p>
+    <p><strong>Identifier</strong> <code>disallow_numeric_last</code><br><strong>Value Type</strong> boolean      </p>
+    <pre><code>$policy-&gt;disallow_numeric_last = true;
+$rules['disallow_numeric_last'] = true;
+    </code></pre>
+
+    <h3>Minimun Numeric Characters</h3>
+    <p>The minimum number of numeric characters allowed in a password</p>
+    <p><strong>Identifier</strong> <code>min_numeric_chars</code><br><strong>Value Type</strong> integer      </p>
+    <pre><code>$policy-&gt;min_numeric_chars = 1;
+$rules['min_numeric_chars'] = 1;
+    </code></pre>
+
+    <h3>Maximum Numeric Characters</h3>
+    <p>The maximum number of numeric characters allowed in a password</p>
+    <p><strong>Identifier</strong> <code>max_numeric_chars</code><br><strong>Value Type</strong> integer      </p>
+    <pre><code>$policy-&gt;max_numeric_chars = 16;
+$rules['max_numeric_chars'] = 16;
+    </code></pre>
+
+    <h3>Disallow Non-Alphanumeric Characters</h3>
+    <p>Do not allow non-alphanumeric characters in a password. Non-alphanumeric characters are those defined as non-word characters in Perl Regular Expressions. This is functionally equivalent to <code>max_nonalphanumeric_chars = 0</code></p>
+    <p><strong>Identifier</strong> <code>disallow_nonalphanumeric_chars</code><br><strong>Value Type</strong> boolean      </p>
+    <pre><code>$policy-&gt;disallow_nonalphanumeric_chars = true;
+$rules['disallow_nonalphanumeric_chars'] = true;
+    </code></pre>
+
+    <h3>Disallow Non-Alphanumeric Characters First</h3>
+    <p>Do not allow the first character in the word to be non-alphanumeric. Non-alphanumeric characters are those defined as non-word characters in Perl Regular Expressions.</p>
+    <p><strong>Identifier</strong> <code>disallow_nonalphanumeric_first</code><br><strong>Value Type</strong> boolean      </p>
+    <pre><code>$policy-&gt;disallow_nonalphanumeric_first = true;
+$rules['disallow_nonalphanumeric_first'] = true;
+    </code></pre>
+
+    <h3>Disallow Non-Alphanumeric Characters Last</h3>
+    <p>Do not allow the last character in the word to be non-alphanumeric. Non-alphanumeric characters are those defined as non-word characters in Perl Regular Expressions.</p>
+    <p><strong>Identifier</strong> <code>disallow_nonalphanumeric_last</code><br><strong>Value Type</strong> boolean      </p>
+    <pre><code>$policy-&gt;disallow_nonalphanumeric_last = true;
+$rules['disallow_nonalphanumeric_last'] = true;
+    </code></pre>
+
+    <h3>Minimum Number of Non-Alphanumeric Characters</h3>
+    <p>The minimum number of non-alphanumeric characters allowed in a password. Non-alphanumeric characters are those defined as non-word characters in Perl Regular Expressions.</p>
+    <p><strong>Identifier</strong> <code>min_nonalphanumeric_chars</code><br><strong>Value Type</strong> integer      </p>
+    <pre><code>$policy-&gt;min_nonalphanumeric_chars = 1;
+$rules['min_nonalphanumeric_chars'] = 1;
+    </code></pre>
+
+    <h3>Maximum Number of Non-Alphanumeric Characters</h3>
+    <p>The maximum number of non-alphanumeric characters allowed in a password. Non-alphanumeric characters are those defined as non-word characters in Perl Regular Expressions.</p>
+    <p><strong>Identifier</strong> <code>max_nonalphanumeric_chars</code><br><strong>Value Type</strong> integer      </p>
+    <pre><code>$policy-&gt;max_nonalphanumeric_chars = 16;
+$rules['max_nonalphanumeric_chars'] = 16;
+    </code></pre>
+    </div>
+</body>
+</html>
