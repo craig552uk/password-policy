@@ -77,7 +77,8 @@ class PasswordPolicy
      */
     public function __get($rule)
     {
-        return 1;   
+        if( isset($this->rules[$rule]) ) return $this->rules[$rule]['value'];
+                                         return false;   
     }
     
     /*
@@ -90,7 +91,8 @@ class PasswordPolicy
      */
     public function __set($rule, $value)
     {
-        return 1;
+        if( isset($this->rules[$rule]) ) return $this->rules[$rule]['value'] = $value;
+                                         return false;
     }
     
     /*
