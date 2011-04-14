@@ -162,8 +162,15 @@ class PasswordPolicy
      */
     public function __set($rule, $value)
     {
-        if( isset($this->rules[$rule]) ) return $this->rules[$rule]['value'] = $value;
-                                         return false;
+        if( isset($this->rules[$rule]) )
+        {
+            if( 'integer' == $this->rules[$rule]['type'] && is_int($value) )
+            return $this->rules[$rule]['value'] = $value;
+            
+            if( 'boolean' == $this->rules[$rule]['type'] && is_bool($value) )
+            return $this->rules[$rule]['value'] = $value;
+        }
+        return false;
     }
     
     /*
